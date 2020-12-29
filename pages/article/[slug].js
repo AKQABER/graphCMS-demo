@@ -1,6 +1,9 @@
+import { useRouter } from 'next/router';
 import React from 'react';
 import Head from 'next/head';
 import Link from 'next/link';
+import fetcher from '../../modules/fetcher';
+import getSWR from '../../modules/swr';
 import parseComponent from '../../modules/parseComponent';
 import {
   contentPageQuery,
@@ -8,17 +11,21 @@ import {
 } from '../../queries/ContentPageQuery';
 
 export async function getStaticProps({ params }) {
-  const { page: article } = await contentPageQuery(params.slug);
+  const { page: article } = await fetcher(contentPageQuery, {
+    slug: params.slug,
+  });
 
   return {
     props: {
       article,
+      slug: params.slug,
     },
   };
 }
 
 export async function getStaticPaths() {
-  const { pages: articles } = await allPagesOfTypeQuery('article');
+  const query = allPagesOfTypeQuery('article');
+  const { pages: articles } = await fetcher(query);
 
   return {
     paths: articles.map(({ slug }) => ({
@@ -28,7 +35,17 @@ export async function getStaticPaths() {
   };
 }
 
-const Article = ({ article }) => {
+const Article = props => {
+  const router = useRouter();
+  const article = getSWR(
+    [contentPageQuery, { slug: props.slug }],
+    props.article,
+  );
+
+  if (router.isFallback) {
+    return <h1>Loading...</h1>;
+  }
+
   return (
     <div className="container">
       <Head>
