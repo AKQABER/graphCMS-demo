@@ -29,7 +29,7 @@ export async function getStaticPaths() {
     paths: blogs.map(({ slug }) => ({
       params: { slug },
     })),
-    fallback: false,
+    fallback: true,
   };
 }
 
