@@ -1,3 +1,4 @@
+import { useRouter } from 'next/router';
 import Head from 'next/head';
 import Link from 'next/link';
 import fetcher from '../../modules/fetcher';
@@ -30,7 +31,12 @@ export async function getStaticPaths() {
 }
 
 const Recipe = props => {
+  const router = useRouter();
   const recipe = getSWR([recipeQuery, { slug: props.slug }], props.recipe);
+
+  if (router.isFallback) {
+    return <h1>Loading...</h1>;
+  }
 
   return (
     <div className="container">
