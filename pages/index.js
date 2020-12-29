@@ -1,6 +1,6 @@
 import Head from 'next/head';
 import Link from 'next/link';
-import useSWR from 'swr';
+import getSWR from '../modules/swr';
 import fetcher from '../modules/fetcher';
 import { indexRecipes, indexArticles, indexBlogs } from '../queries/IndexQuery';
 
@@ -19,19 +19,9 @@ export async function getStaticProps() {
 }
 
 const Index = props => {
-  const { data: recipeData } = useSWR(indexRecipes, fetcher, {
-    initialData: props.recipes,
-  });
-  const { data: articleData } = useSWR(indexArticles, fetcher, {
-    initialData: props.articles,
-  });
-  const { data: blogData } = useSWR(indexBlogs, fetcher, {
-    initialData: props.blogs,
-  });
-
-  const recipes = recipeData.recipes;
-  const articles = articleData.pages;
-  const blogs = blogData.pages;
+  const { recipes } = getSWR(indexRecipes, props.recipes);
+  const { pages: articles } = getSWR(indexArticles, props.articles);
+  const { pages: blogs } = getSWR(indexBlogs, props.blogs);
 
   return (
     <div className="container">
