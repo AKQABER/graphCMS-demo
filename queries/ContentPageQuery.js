@@ -5,7 +5,6 @@ export const contentPageQuery = `
       title
       components {
         ... on HeadingBlock {
-          id
           heading
           type
         }
@@ -21,6 +20,10 @@ export const contentPageQuery = `
           content
           title
           type
+        }
+        ... on MarkdownBlock {
+          type
+          content
         }
       }
     }

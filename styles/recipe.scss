@@ -21,7 +21,7 @@
 }
 
 .steps-container {
-  margin: 32px 0 128px; 
+  margin: 32px 0 128px;
 
   .recipe-step {
     display: flex;
@@ -38,7 +38,9 @@
 
 .recipes-container {
   display: grid;
-  grid-template-columns: calc(33.3333% - 24px) calc(33.3333% - 24px) calc(33.3333% - 24px);
+  grid-template-columns: calc(33.3333% - 24px) calc(33.3333% - 24px) calc(
+      33.3333% - 24px
+    );
   gap: 24px;
   grid-template-rows: auto;
   margin-bottom: 64px;
@@ -63,4 +65,8 @@
 h4 {
   margin-bottom: 36px;
   cursor: pointer;
+}
+
+.markdown-container {
+  margin: 64px 0;
 }

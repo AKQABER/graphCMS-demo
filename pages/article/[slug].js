@@ -4,7 +4,7 @@ import Head from 'next/head';
 import Link from 'next/link';
 import fetcher from '../../modules/fetcher';
 import getSWR from '../../modules/swr';
-import parseComponent from '../../modules/parseComponent';
+import renderComponent from '../../modules/renderComponent';
 import {
   contentPageQuery,
   allPagesOfTypeQuery,
@@ -56,7 +56,7 @@ const Article = props => {
       </Link>
       <h1>{article.title}</h1>
       {article.components.map(component => {
-        return parseComponent(component);
+        return renderComponent(component);
       })}
     </div>
   );

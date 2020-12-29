@@ -17,3 +17,11 @@ export const recipeQuery = `
     }
   }
 `;
+
+export const allRecipesQuery = `
+  {
+    recipes {
+      slug
+    }
+  }
+`;

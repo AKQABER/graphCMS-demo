@@ -5,8 +5,7 @@ import fetcher from '../../modules/fetcher';
 import getSWR from '../../modules/swr';
 
 import Clock from '../../components/Clock';
-import { recipeQuery } from '../../queries/RecipeQuery';
-import { recipesQuery } from '../../queries/RecipesQuery';
+import { recipeQuery, allRecipesQuery } from '../../queries/RecipeQuery';
 
 export async function getStaticProps({ params }) {
   const { recipe } = await fetcher(recipeQuery, { slug: params.slug });
@@ -20,7 +19,7 @@ export async function getStaticProps({ params }) {
 }
 
 export async function getStaticPaths() {
-  const { recipes } = await fetcher(recipesQuery);
+  const { recipes } = await fetcher(allRecipesQuery);
 
   return {
     paths: recipes.map(({ slug }) => ({
