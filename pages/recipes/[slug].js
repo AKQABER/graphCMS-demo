@@ -1,31 +1,37 @@
 import Head from 'next/head';
 import Link from 'next/link';
+import fetcher from '../../modules/fetcher';
+import getSWR from '../../modules/swr';
+
 import Clock from '../../components/Clock';
 import { recipeQuery } from '../../queries/RecipeQuery';
 import { recipesQuery } from '../../queries/RecipesQuery';
 
 export async function getStaticProps({ params }) {
-  const { recipe } = await recipeQuery(params.slug);
+  const { recipe } = await fetcher(recipeQuery, { slug: params.slug });
 
   return {
     props: {
       recipe,
+      slug: params.slug,
     },
   };
 }
 
 export async function getStaticPaths() {
-  const { recipes } = await recipesQuery();
+  const { recipes } = await fetcher(recipesQuery);
 
   return {
     paths: recipes.map(({ slug }) => ({
       params: { slug },
     })),
-    fallback: false,
+    fallback: true,
   };
 }
 
-const Recipe = ({ recipe }) => {
+const Recipe = props => {
+  const recipe = getSWR([recipeQuery, { slug: props.slug }], props.recipe);
+
   return (
     <div className="container">
       <Head>
