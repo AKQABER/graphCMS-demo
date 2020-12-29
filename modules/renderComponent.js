@@ -24,7 +24,12 @@ const renderComponent = component => {
       />
     );
   } else if (component.type === 'MarkdownBlock') {
-    return <MarkdownBlock content={component.content} />;
+    return (
+      <MarkdownBlock
+        key={component.content.slice(0, 24)}
+        content={component.content}
+      />
+    );
   } else {
     return null;
   }
