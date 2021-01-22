@@ -1,6 +1,6 @@
-export const contentPageQuery = `
-  query ContentPageQuery($slug: String!) {
-    page(where: { slug: $slug }) {
+export const contentPageQuery = locale => `
+  query ContentPageQuery($id: ID!) {
+    page(where: { id: $id }, locales: [${locale}, en]) {
       slug
       title
       components {
@@ -34,6 +34,11 @@ export const allPagesOfTypeQuery = type => `
   {
     pages(where: {category: ${type}}) {
       slug
+      localizations(includeCurrent: true) {
+        id
+        slug
+        locale
+      }
     }
   }
 `;

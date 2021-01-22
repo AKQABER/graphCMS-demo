@@ -70,3 +70,33 @@ h4 {
 .markdown-container {
   margin: 64px 0;
 }
+
+.index-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  text-align: center;
+
+  .link {
+    margin-bottom: 16px;
+  }
+}
+
+.lang-switch {
+  width: 100%;
+
+  .lang-container {
+    max-width: 1120px;
+    margin: 0 auto;
+    padding: 16px 16px;
+
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+
+    > div {
+      margin-left: 32px;
+    }
+  }
+}

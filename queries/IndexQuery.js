@@ -10,18 +10,18 @@ export const indexRecipes = `
   }
 `;
 
-export const indexArticles = `
+export const indexArticles = locale => `
   query ArticleQuery {
-    pages(where: {category: article}) {
+    pages(where: {category: article}, locales: [${locale}]) {
       slug
       title
     }
   }
 `;
 
-export const indexBlogs = `
+export const indexBlogs = locale => `
   query BlogQuery {
-    pages(where: {category: blog}) {
+    pages(where: {category: blog}, locales: [${locale}]) {
       slug
       title
     }
