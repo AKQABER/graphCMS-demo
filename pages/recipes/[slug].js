@@ -1,8 +1,8 @@
 import { useRouter } from 'next/router';
+import useSWR from 'swr';
 import Head from 'next/head';
 import Link from 'next/link';
 import fetcher from '../../modules/fetcher';
-import getSWR from '../../modules/swr';
 
 import Clock from '../../components/Clock';
 import { recipeQuery, allRecipesQuery } from '../../queries/RecipeQuery';
@@ -31,9 +31,15 @@ export async function getStaticPaths() {
 
 const Recipe = props => {
   const router = useRouter();
-  const recipe = getSWR([recipeQuery, { slug: props.slug }], props.recipe);
+  const { data: recipe, error } = useSWR(
+    [recipeQuery, { slug: props.slug }],
+    fetcher,
+    {
+      initialData: props.recipe,
+    },
+  );
 
-  if (router.isFallback) {
+  if (!recipe || router.isFallback) {
     return <h1>Loading...</h1>;
   }
 
