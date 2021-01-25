@@ -1,6 +1,6 @@
-export const recipeQuery = `
-  query RecipeQuery($slug: String!) {
-    recipe(where: { slug: $slug }) {
+export const recipeQuery = slug => `
+  {
+    recipe(where: { slug: "${slug}" }) {
       title
       cookingDuration
       description
